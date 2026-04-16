@@ -46,6 +46,53 @@ export const signUp = async (req, res) => {
 
 }
 
-export const signIn = async (req, res) => { }
+export const signIn = async (req, res) => {
+    const { email, password } = req.body
 
-export const logOut = async (req, res) => { }
+    // check if user exists
+    const userExists = await prisma.user.findUnique({
+        where : {
+            email : email
+        }
+    })
+
+    if (!userExists){
+        return res
+            .status(400)
+            .json({error : 'Invalid Email or password'})
+    }
+
+    // validate password
+    const isValidPassword = bcrypt.compare(password, userExists.password)
+    if (!isValidPassword){
+        return res 
+            .status(400)
+            .json({error : "Incorrect password"})
+    }
+
+    // generate token
+    const token = generateToken(userExists.id, res)
+
+    // respond
+    res.status(200).json({
+        status : "success",
+        data : {
+            user : {
+                id : userExists.id,
+                email : userExists.email
+            },
+            token
+        }
+    })
+}
+
+export const logOut = async (req, res) => {
+    res.cookie("jwt", {
+        httpOnly : true,
+        expires : new Date(0),
+    })
+    res.status(200).json({
+        status : "success",
+        msg : "Logged out successfully"
+    })
+}
