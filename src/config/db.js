@@ -1,8 +1,14 @@
-import { PrismaClient } from "@prisma/client/extension";
+import "dotenv/config";
+import { PrismaClient } from "../generated/prisma/client.ts";
+import { PrismaPg } from "@prisma/adapter-pg";
 
-const prisma = new PrismaClient({
-    log : process.env.NODE_ENV == "development" ? ["query", "error", "warn"] : ["error"],
-})
+const connectionString = process.env.DATABASE_URL;
+
+const adapter = new PrismaPg({
+    connectionString
+});
+
+const prisma = new PrismaClient({adapter})
 
 const connectDB = async () => {
     try {
@@ -18,4 +24,4 @@ const disconnectDB = async () => {
     await prisma.$disconnect();
 }
 
-export { prisma, connectDB, disconnectDB}
+export { prisma, connectDB, disconnectDB }

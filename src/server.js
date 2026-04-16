@@ -8,6 +8,9 @@ connectDB()
 
 const app = express()
 
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
+
 const PORT = 5001
 
 app.get('/', (req, res) => {
@@ -16,7 +19,7 @@ app.get('/', (req, res) => {
 
 app.use('/api', rootRouter)
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`)
 })
 
