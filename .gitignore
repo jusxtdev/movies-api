@@ -60,3 +60,5 @@ uploads/
 # 🔹 Optional: cache
 
 .cache/
+
+/src/generated/prisma
