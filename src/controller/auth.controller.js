@@ -2,7 +2,7 @@ import { prisma } from "../config/db.js";
 import bcrypt from "bcrypt"
 import { generateToken } from "../utils/generateToken.js";
 
-export const signUp = async (req, res) => {
+const signUp = async (req, res) => {
     const { name, email, password } = req.body;
 
     // find user by email
@@ -46,7 +46,7 @@ export const signUp = async (req, res) => {
 
 }
 
-export const signIn = async (req, res) => {
+const signIn = async (req, res) => {
     const { email, password } = req.body
 
     // check if user exists
@@ -86,7 +86,7 @@ export const signIn = async (req, res) => {
     })
 }
 
-export const logOut = async (req, res) => {
+const logOut = async (req, res) => {
     res.cookie("jwt", {
         httpOnly : true,
         expires : new Date(0),
@@ -96,3 +96,9 @@ export const logOut = async (req, res) => {
         msg : "Logged out successfully"
     })
 }
+
+const authController = {
+    signUp, signIn, logOut
+}
+
+export default authController

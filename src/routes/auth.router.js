@@ -1,12 +1,14 @@
 import express from "express"
-import { signUp, signIn, logOut } from "../controller/auth.controller.js"
+import authController from "../controller/auth.controller.js"
+import validate from "../middleware/validate.middleware.js"
+import UserSchema from "../schemas/user.schema.js"
 
 const router = express.Router()
 
-router.post('/signup', signUp)
+router.post('/signup', validate(UserSchema.signUpUser), authController.signUp)
 
-router.post('/signin', signIn) 
+router.post('/signin', validate(UserSchema.signInUser), authController.signIn)
 
-router.post('/logout', logOut)
+router.post('/logout', authController.logOut)
 
 export default router
