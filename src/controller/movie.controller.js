@@ -1,6 +1,5 @@
 import { prisma } from "../config/db.js"
 
-
 const getMovies = async (req, res) => {
     const allMovies = await prisma.movie.findMany()
     res
@@ -100,7 +99,6 @@ const deleteMovie = async (req, res) => {
         status: "success",
         data: deletedMovie
     })
-
 }
 
 const movieController = {
