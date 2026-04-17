@@ -10,6 +10,7 @@ const validate = (schema) => {
                 error : errorMessage
             })
         }
+        next()
     }
 }
 

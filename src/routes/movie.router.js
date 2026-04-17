@@ -3,8 +3,10 @@ import express from "express"
 import validate from "../middleware/validate.middleware.js"
 import MovieSchema from "../schemas/movie.schema.js"
 import movieController from "../controller/movie.controller.js"
+import { authMiddleware } from "../middleware/auth.middleware.js"
 
 const router = express.Router()
+router.use(authMiddleware)
 
 router.get('/', movieController.getMovies)
 

@@ -2,6 +2,8 @@ import express from "express"
 import rootRouter from "./routes/root.router.js"
 import { config } from "dotenv"
 import { connectDB, disconnectDB } from "./config/db.js"
+import cookieParser from "cookie-parser"
+
 
 config()
 connectDB()
@@ -10,6 +12,7 @@ const app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
+app.use(cookieParser())
 
 const PORT = 5001
 
