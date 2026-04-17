@@ -13,10 +13,13 @@ const getMovies = async (req, res) => {
 
 const addMovie = async (req, res) => {
     const newMovieData = req.body
+    
+    const userId = req.userId
+    newMovieData.createdBy = userId
     const newMovie = await prisma.movie.create({
         data: newMovieData
     })
-
+    
     res.status(201).json({
         status: "success",
         data: {

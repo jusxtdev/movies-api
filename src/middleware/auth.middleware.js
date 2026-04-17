@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken"
 import { prisma } from "../config/db.js";
 
-export const authMiddleware = async (req, res, next) => {
+const authMiddleware = async (req, res, next) => {
     let token;
 
     if (
@@ -33,9 +33,11 @@ export const authMiddleware = async (req, res, next) => {
         }
 
         // attach userId to req
-        req.user = user;
+        req.userId = user.id;
         next();
     } catch (error) {
         return res.status(401).json({ error: "Not authorized, token failed" });
     }
 }
+
+export default authMiddleware
