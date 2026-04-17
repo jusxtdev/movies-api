@@ -10,6 +10,8 @@ router.use(authMiddleware)
 
 router.get('/', movieController.getMovies)
 
+router.get('/:id', movieController.getMovieById)
+
 router.post('/', validate(MovieSchema.createMovie), movieController.addMovie)
 
 router.put('/:id', validate(MovieSchema.updateMovie), movieController.updateMovie)
