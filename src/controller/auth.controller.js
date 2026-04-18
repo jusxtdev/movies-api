@@ -98,7 +98,7 @@ const logOut = async (req, res) => {
 }
 
 const authController = {
-    signUp, signIn, logOut
+    signUp, signIn, profile, logOut
 }
 
 export default authController
